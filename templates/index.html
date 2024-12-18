@@ -1,0 +1,156 @@
+<html>
+    <head>
+        <title>Композиты</title>
+        <style>
+            body {
+                background-color: #87CEFA;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 20px 0;
+            }
+            form {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                width: 600px;
+                margin: 20px auto;
+            }
+            h1 {
+                text-align: center;
+                color: #333;
+                margin-bottom: 20px;
+            }
+            .form-container {
+                display: flex;
+                flex-wrap: wrap;
+                column-gap: 40px;
+                row-gap: 20px;
+            }
+            .form-group {
+                flex: 0 1 calc(50% - 20px);
+                box-sizing: border-box;
+            }
+            .form-group label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 5px;
+                text-align: left;
+            }
+            input {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+            .button-container {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                margin-top: 20px;
+            }
+            button {
+                background-color: #007BFF;
+                color: white;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                padding: 10px 20px;
+                border-radius: 5px;
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+            .result {
+                background-color: #f8f9fa;
+                padding: 15px;
+                margin-top: 20px;
+                text-align: center;
+                font-size: 18px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                font-weight: bold;
+                color: #333;
+            }
+            .error {
+                color: red;
+                text-align: center;
+                font-weight: bold;
+                margin-top: 10px;
+            }
+            .corner-image {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 200px; 
+                height: auto; 
+                object-fit: contain; 
+            }
+        </style>
+        <script>
+            function clearForm() {
+                const formElements = document.querySelectorAll('form input');
+                formElements.forEach(element => {
+                    if (element.type === 'number') {
+                        element.value = ''; // Очищаем значения
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Картинка в углу -->
+        <img class="corner-image" src="{{ url_for('static', filename='CDO.png') }}" alt="Картинка">
+
+        <div class="container">
+            <div>
+                <h1>Прогнозирование конечных свойств новых материалов</h1>
+                <form method="post">
+                    <div class="form-container">
+                        {% for field, label in [
+                            ('Matrix_Filler_Ratio', 'Соотношение матрица-наполнитель'),
+                            ('Density', 'Плотность, кг/м3'),
+                            ('Elastic_Modulus', 'Модуль упругости, ГПа'),
+                            ('Hardener_Content', 'Количество отвердителя, м.%'),
+                            ('Epoxy_Group_Content', 'Содержание эпоксидных групп, %'),
+                            ('Flash_Point_Temperature', 'Температура вспышки, °C'),
+                            ('Surface_Density', 'Поверхностная плотность, г/м2'),
+                            ('Tensile_Elastic_Modulus', 'Модуль упругости при растяжении, ГПа'),
+                            ('Resin_Consumption', 'Потребление смолы, г/м2'),
+                            ('Stripe angle', 'Угол нашивки, град'),
+                            ('Stitch_Pitch', 'Шаг нашивки'),
+                            ('Stitch_Density', 'Плотность нашивки') ] %}
+                        <div class="form-group">
+                            <label>{{ label }}</label>
+                            <input type="number" name="{{ field }}" value="{{ values.get(field, '') }}" required>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="button-container">
+                        <button type="submit">Отправить</button>
+                        <button type="button" onclick="clearForm()">Очистить</button>
+                    </div>
+                </form>
+
+                {% if error %}
+                    <div class="error">{{ error }}</div>
+                {% endif %}
+
+                {% if message %}
+                    <div class="result">{{ message }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+</html>
+
