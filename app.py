@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from model_loader import get_prediction  # Импорт новой функции
+from model_loader import get_prediction
 
 app = Flask(__name__)
 
@@ -12,9 +12,12 @@ def index():
     if request.method == "POST":
         try:
             # Список полей формы
-            fields = ["Matrix_Filler_Ratio", "Density", "Elastic_Modulus", "Hardener_Content",
-                      "Epoxy_Group_Content", "Flash_Point_Temperature", "Surface_Density",
-                      "Tensile_Elastic_Modulus", "Resin_Consumption", "Stripe angle", "Stitch_Pitch", "Stitch_Density"]
+            fields = [
+                "Matrix_Filler_Ratio", "Density", "Elastic_Modulus", "Hardener_Content",
+                "Epoxy_Group_Content", "Flash_Point_Temperature", "Surface_Density",
+                "Tensile_Elastic_Modulus", "Resin_Consumption", "Stripe angle",
+                "Stitch_Pitch", "Stitch_Density"
+            ]
 
             values = {field: request.form.get(field) for field in fields}
 
