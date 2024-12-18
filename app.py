@@ -28,7 +28,7 @@ def index():
                 # Получаем предсказание с использованием модели
                 features = [float(values[field]) for field in fields]
                 prediction = get_prediction(*features)
-                message = f"Прогнозируемая прочность при растяжении, МПа составляет {prediction} МПа"
+                message = f"Прогнозируемый модуль упругости при растяжении составляет {prediction} ГПа"
 
         except Exception as e:
             error = f"Ошибка: {str(e)}"
